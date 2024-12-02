@@ -228,15 +228,15 @@ function App()
 		<div className="displayBoard">
 			<div>
 				<h1 id="state-title">{stateData.name && stateData.name}</h1>
-				<p id="state-description">{stateData.description && stateData.description}</p>
+				<p id="state-description">{stateData.description && stateData.description.replace(/['’"]/g, "\\'")}</p>
 			</div>
 			<div>
 				<h1 id="city-title">{cityData.name && cityData.name}</h1>
-				<p id="city-description">{cityData.description && cityData.description}</p>
+				<p id="city-description">{cityData.description && cityData.description.replace(/['’"]/g, "\\'")}</p>
 			</div>
 			<div>
 				<h1 id="landmark-title">{landmarkData.name && landmarkData.name}</h1>
-				<p id="landmark-description">{landmarkData.description && landmarkData.description}</p>
+				<p id="landmark-description">{landmarkData.description && landmarkData.description.replace(/['’"]/g, "\\'")}</p>
 			</div>
 		</div>
 	</div>
