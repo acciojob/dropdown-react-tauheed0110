@@ -1,8 +1,8 @@
-import React, { useState,useReducer } from "react";
+import React, { useState,useReducer, useEffect } from "react";
 import "./../styles/App.css";
 
 
-const states = [{
+const statesData = [{
 	name : "Madhya Pradesh",
 	description:"Madhya Pradesh, a large state in central India, retains landmarks from eras throughout Indian history.",
 	city :[{
@@ -140,10 +140,105 @@ const states = [{
 
 function App() 
 {
-	// Do not alter/remove main div
+	const [states, setStates] = useState(null);
+	const [stateData, setStateData] = useState({name: "", description: ""});
+	const [cities, setCities] = useState(null);
+	const [cityData, setCityData] = useState({name: "", description: ""});
+	const [landmarks, setLandMarks] = useState(null);
+	const [landmarkData, setLandmarkData] = useState({name: "", description: ""});
+
+	function handleStateChange(e){
+		const stateName = e.target.value;
+		const stateFound = states.find(state =>  state.name === stateName);
+		
+		if(stateFound){
+			setStateData({name: stateFound.name, description: stateFound.description});
+			// now set the cities as well.
+			setCities(stateFound.city);
+			setCityData({name: stateFound.city[0].name, description: stateFound.city[0].description});
+			// setlandmarks as well.
+			setLandMarks(stateFound.city[0].landmarks);
+			setLandmarkData({name: stateFound.city[0].landmarks[0].name, description: stateFound.city[0].landmarks[0].description})
+		}
+	}
+	function handleCityChange(e){
+		const cityName = e.target.value;
+		const cityFound = cities.find(city => city.name === cityName);
+		if(cityFound){
+			setCityData({name: cityFound.name, description: cityFound.description});
+			// set the landmarks
+			setLandMarks(cityFound.landmarks);
+			setLandmarkData({name: cityFound.landmarks[0].name, description: cityFound.landmarks[0].description})
+		}
+	}
+	function handleLandmarkChange(e){
+		const landName = e.target.value;
+		const landFound = landmarks.find(land => land.name == landName);
+		if(landFound){
+			setLandmarkData({name: landFound.name, description: landFound.description});
+		}
+	}
+	useEffect(()=>{
+		// feel like you are fetching data from API.
+		setStates(statesData);
+		setStateData({name: statesData[0].name, description: statesData[0].description});
+		// set the 0th city as well
+		setCities(statesData[0].city);
+		setCityData({name: statesData[0].city[0].name, description: statesData[0].city[0].description})
+		// // set the 0th landmark
+		setLandMarks(statesData[0].city[0].landmarks);
+		setLandmarkData({name: statesData[0].city[0].landmarks[0].name, description: statesData[0].city[0].landmarks[0].description})
+
+	}, []);
+
 	return (
 	<div id="main">
-		
+		<form>
+			<div className="formItem">
+				<label htmlFor="state">States: </label>
+				<select id="state" value={stateData.name} onChange={(e)=>{handleStateChange(e)}}>
+					{
+						states && states.map((state, index)=>{
+							return <option key={index} value={state.name}>{state.name}</option>
+						})
+					}
+				</select>
+			</div>
+			<div className="formItem">
+				<label htmlFor="">Cities: </label>
+				<select id="city" value={cityData.name} onChange={(e)=>{handleCityChange(e)}}>
+					{
+						cities && cities.map((city, index) => {
+							return <option key={index} value={city.name}>{city.name}</option>
+						})
+					}
+				</select>
+			</div>
+			<div className="formItem">
+				<label htmlFor="">landmarks: </label>
+				<select id="landmark" value={landmarkData.name} onChange={(e)=>{handleLandmarkChange(e)}}>
+					{
+						landmarks && landmarks.map((landmark, index) => {
+							return <option key={index} value={landmark.name}>{landmark.name}</option>
+						})
+					}
+				</select>
+			</div>
+		</form>
+		<div className="displayBoard">
+			<div>
+				<h1 id="state-name">{stateData.name && stateData.name}</h1>
+				<p id="state-description">{stateData.description && stateData.description}</p>
+			</div>
+			<div>
+				<h1 id="city-name">{cityData.name && cityData.name}</h1>
+				<p id="city-description">{cityData.description && cityData.description}</p>
+			</div>
+			<div>
+				<h1 id="landmark-name">{landmarkData.name && landmarkData.name}</h1>
+				<p id="landmark-description">{landmarkData.description && landmarkData.description}</p>
+			</div>
+		</div>
 	</div>
 	);
 }
