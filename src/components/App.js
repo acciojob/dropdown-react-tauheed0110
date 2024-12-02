@@ -227,15 +227,15 @@ function App()
 		</form>
 		<div className="displayBoard">
 			<div>
-				<h1 id="state-name">{stateData.name && stateData.name}</h1>
+				<h1 id="state-title">{stateData.name && stateData.name}</h1>
 				<p id="state-description">{stateData.description && stateData.description}</p>
 			</div>
 			<div>
-				<h1 id="city-name">{cityData.name && cityData.name}</h1>
+				<h1 id="city-title">{cityData.name && cityData.name}</h1>
 				<p id="city-description">{cityData.description && cityData.description}</p>
 			</div>
 			<div>
-				<h1 id="landmark-name">{landmarkData.name && landmarkData.name}</h1>
+				<h1 id="landmark-title">{landmarkData.name && landmarkData.name}</h1>
 				<p id="landmark-description">{landmarkData.description && landmarkData.description}</p>
 			</div>
 		</div>
